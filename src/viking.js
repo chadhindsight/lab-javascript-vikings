@@ -39,7 +39,7 @@ class Saxon extends Soldier{
         super(health, strength)
         this.receiveDamage = function receiveDamage(damage) {
             this.health -= damage
-            return this.health === 0 ? `A Saxon has has died in act of combat` : `A Saxon has received ${this.damage}`
+            return this.health <= 0 ? `A Saxon has died in combat` : `A Saxon has received ${this.damage}`
         };
         this.attack = function attack() {
             return this.strength
@@ -55,23 +55,49 @@ class War {
     }
     // ARMY FUNCTIONS
      addViking = function addViking(viking) {
-       new Viking(viking)
+    //    new Viking(viking)
         this.vikingArmy.push(viking)
         // console.log(this.vikingArmy)
     };
 
     addSaxon = function addSaxon(saxon) {
-        new Saxon(saxon)
+        // new Saxon(saxon)
         this.saxonArmy.push(saxon)
     };
     
+    vikingAttack() {
+        let vikingRandom = this.vikingArmy[Math.floor(Math.random() * this.vikingArmy.length)];
+        let saxonRandom = this.saxonArmy[Math.floor(Math.random() * this.saxonArmy.length)];
+        let attackDamage = saxonRandom.receiveDamage(vikingRandom.strength);
+        if (saxonRandom.health <= 0)
+            this.saxonArmy.splice(this.saxonArmy.indexOf(saxonRandom, 1));
+        return attackDamage;
+    }
+    saxonAttack() {
+        let saxonRandom = this.saxonArmy[Math.floor(Math.random() * this.saxonArmy.length)];
+        let vikingRandom = this.vikingArmy[Math.floor(Math.random() * this.vikingArmy.length)];
+        let attackDamage = vikingRandom.receiveDamage(saxonRandom.strength);
+        if (vikingRandom.health <= 0)
+            this.vikingArmy.splice(this.vikingArmy.indexOf(vikingRandom, 1));
+        return attackDamage;
+    };
     // vikingAttack = function vikingAttack(){
-    //     Saxon.receiveDamage(Viking.strength)
+    //     let vikingRandom = this.vikingArmy[Math.floor(Math.random() * this.vikingArmy.length)];
+    //     let saxonRandom = this.saxonArmy[Math.floor(Math.random() * this.saxonArmy.length)];
+    //     let attackDamage = saxonRandom.receiveDamage(vikingRandom.strength);
+    //     if (saxonRandom.health <= 0) this.saxonArmy.splice(this.saxonArmy.indexOf(saxonRandom)) ;
+    //     return attackDamage;         
     // };
 
     // saxonAttack = function saxonAttack() {
+    //     let saxonRandom = this.saxonArmy[Math.floor(Math.random() * this.saxonArmy.length)];
+    //     let vikingRandom = this.vikingArmy[Math.floor(Math.random() * this.vikingArmy.length)];
+    //     let attackDamage = saxonRandom.receiveDamage(vikingRandom.strength);
+    //     if (vikingRandom.health <= 0) this.vikingArmy.splice(this.vikingArmy.indexOf(vikingRandom))
 
+    //     return attackDamage
     // };
+
     howStatus = function howStatus(){
         
     };
